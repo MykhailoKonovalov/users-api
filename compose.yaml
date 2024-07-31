@@ -1,0 +1,38 @@
+version: '3.7'
+
+services:
+  nginx:
+    image: nginx:1.15.3-alpine
+    container_name: ${PROJECT_NAME}-nginx
+    restart: always
+    volumes:
+      - './public/:/usr/src/app:ro'
+      - './.docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro'
+    ports:
+      - '8000:80'
+    depends_on:
+      - php
+
+  php:
+    build:
+      context: .
+      dockerfile: .docker/php/Dockerfile
+    container_name: ${PROJECT_NAME}-php
+    restart: always
+    volumes:
+      - './:/usr/src/app:cached'
+      - './.docker/php/config/php.ini:/usr/local/etc/php/conf.d/php.ini'
+
+  mysql:
+    container_name: ${PROJECT_NAME}-mysql
+    restart: always
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - database_data:/var/lib/mysql
+
+volumes:
+  database_data:
