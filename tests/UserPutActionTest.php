@@ -13,7 +13,10 @@ class UserPutActionTest extends WebTestCase
         $client = static::createClient();
 
         $client->request(Request::METHOD_PUT, '/v1/api/users/1',
-            server : ['CONTENT_TYPE' => 'application/json'],
+            server : [
+                'CONTENT_TYPE'       => 'application/json',
+                'HTTP_AUTHORIZATION' => 'Bearer testAdmin',
+            ],
             content: json_encode(
                  [
                      'login' => 'test',
@@ -35,7 +38,10 @@ class UserPutActionTest extends WebTestCase
         $client = static::createClient();
 
         $client->request(Request::METHOD_PUT, '/v1/api/users/1',
-            server : ['CONTENT_TYPE' => 'application/json'],
+            server : [
+                'CONTENT_TYPE' => 'application/json',
+                'HTTP_AUTHORIZATION' => 'Bearer testAdmin',
+            ],
             content: json_encode(
                  [
                      'login' => 'test',
@@ -53,7 +59,10 @@ class UserPutActionTest extends WebTestCase
         $client = static::createClient();
 
         $client->request(Request::METHOD_PUT, '/v1/api/users/1',
-            server : ['CONTENT_TYPE' => 'application/json'],
+            server : [
+                'CONTENT_TYPE' => 'application/json',
+                'HTTP_AUTHORIZATION' => 'Bearer testAdmin',
+            ],
             content: json_encode(
                  [
                      'login' => 'test',
@@ -68,7 +77,12 @@ class UserPutActionTest extends WebTestCase
     public function testPutUserIdNotFound(): void
     {
         $client = static::createClient();
-        $client->request(Request::METHOD_PUT, '/v1/api/users', server: ['CONTENT_TYPE' => 'application/json']);
+        $client->request(Request::METHOD_PUT, '/v1/api/users',
+            server: [
+                'CONTENT_TYPE' => 'application/json',
+                'HTTP_AUTHORIZATION' => 'Bearer testAdmin',
+            ]
+        );
 
         $this->assertEquals(Response::HTTP_BAD_REQUEST, $client->getResponse()->getStatusCode());
         $this->assertStringContainsString('User id not provided', $client->getResponse()->getContent());
@@ -77,7 +91,12 @@ class UserPutActionTest extends WebTestCase
     public function testPutUserNotFound(): void
     {
         $client = static::createClient();
-        $client->request(Request::METHOD_PUT, '/v1/api/users/100500', server: ['CONTENT_TYPE' => 'application/json']);
+        $client->request(Request::METHOD_PUT, '/v1/api/users/100500',
+            server: [
+                'CONTENT_TYPE' => 'application/json',
+                'HTTP_AUTHORIZATION' => 'Bearer testAdmin',
+            ]
+        );
 
         $this->assertEquals(Response::HTTP_NOT_FOUND, $client->getResponse()->getStatusCode());
         $this->assertStringContainsString('User not found', $client->getResponse()->getContent());

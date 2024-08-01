@@ -25,6 +25,15 @@ class UserFixtures extends Fixture
             $manager->persist($user);
         }
 
+        $user = new User();
+
+        $user
+            ->setLogin('admin')
+            ->setPhone('11010010')
+            ->setPass('admin100');
+
+        $manager->persist($user);
+
         $manager->flush();
     }
 }

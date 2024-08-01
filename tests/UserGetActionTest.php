@@ -13,7 +13,10 @@ class UserGetActionTest extends WebTestCase
         $client = static::createClient();
 
         $client->request(Request::METHOD_GET, '/v1/api/users/1',
-            server : ['CONTENT_TYPE' => 'application/json']
+            server: [
+                'CONTENT_TYPE'       => 'application/json',
+                'HTTP_AUTHORIZATION' => 'Bearer testAdmin',
+            ]
         );
 
         $this->assertJson($client->getResponse()->getContent());
@@ -31,7 +34,10 @@ class UserGetActionTest extends WebTestCase
         $client = static::createClient();
 
         $client->request(Request::METHOD_GET, '/v1/api/users',
-            server : ['CONTENT_TYPE' => 'application/json']
+            server: [
+                'CONTENT_TYPE'       => 'application/json',
+                'HTTP_AUTHORIZATION' => 'Bearer testAdmin',
+            ]
         );
 
         $this->assertEquals(Response::HTTP_BAD_REQUEST, $client->getResponse()->getStatusCode());
@@ -43,7 +49,10 @@ class UserGetActionTest extends WebTestCase
         $client = static::createClient();
 
         $client->request(Request::METHOD_GET, '/v1/api/users/100500',
-            server : ['CONTENT_TYPE' => 'application/json']
+            server: [
+                'CONTENT_TYPE'       => 'application/json',
+                'HTTP_AUTHORIZATION' => 'Bearer testAdmin',
+            ]
         );
 
         $this->assertEquals(Response::HTTP_NOT_FOUND, $client->getResponse()->getStatusCode());

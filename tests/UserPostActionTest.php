@@ -13,7 +13,10 @@ class UserPostActionTest extends WebTestCase
         $client = static::createClient();
 
         $client->request(Request::METHOD_POST, '/v1/api/users',
-            server :     ['CONTENT_TYPE' => 'application/json'],
+            server :     [
+                'CONTENT_TYPE'       => 'application/json',
+                'HTTP_AUTHORIZATION' => 'Bearer testAdmin',
+            ],
             content:     json_encode([
                 'login' => 'newuser',
                 'phone' => '12345678',
@@ -41,7 +44,10 @@ class UserPostActionTest extends WebTestCase
         $client = static::createClient();
 
         $client->request(Request::METHOD_POST, '/v1/api/users',
-            server:      ['CONTENT_TYPE' => 'application/json'],
+            server :      [
+                'CONTENT_TYPE'       => 'application/json',
+                'HTTP_AUTHORIZATION' => 'Bearer testAdmin',
+            ],
             content: json_encode([
                  'login' => 'newuser',
                  'phone' => '1234567890',
@@ -57,7 +63,10 @@ class UserPostActionTest extends WebTestCase
         $client = static::createClient();
 
         $client->request(Request::METHOD_POST, '/v1/api/users',
-            server : ['CONTENT_TYPE' => 'application/json'],
+            server : [
+                'CONTENT_TYPE'       => 'application/json',
+                'HTTP_AUTHORIZATION' => 'Bearer testAdmin',
+            ],
             content: json_encode(
                  [
                      'login' => 'newuser',
@@ -77,7 +86,10 @@ class UserPostActionTest extends WebTestCase
         $client = static::createClient();
 
         $client->request(Request::METHOD_POST, '/v1/api/users',
-            server :     ['CONTENT_TYPE' => 'application/json'],
+            server :     [
+                'CONTENT_TYPE'       => 'application/json',
+                'HTTP_AUTHORIZATION' => 'Bearer testAdmin',
+            ],
             content:     json_encode([
                  'login' => 'newuser',
                  'phone' => '12345678',
