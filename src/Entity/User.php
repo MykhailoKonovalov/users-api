@@ -22,14 +22,17 @@ class User
     private ?int $id = null;
 
     #[ORM\Column(type: Types::STRING, length: 8)]
+    #[Assert\NotBlank(message: "Login cannot be blank")]
     #[Assert\Length(max: 8, maxMessage: "Login cannot be longer than 8 characters")]
     private ?string $login = null;
 
     #[ORM\Column(type: Types::STRING, length: 8)]
+    #[Assert\NotBlank(message: "Phone cannot be blank")]
     #[Assert\Length(max: 8, maxMessage: "Phone cannot be longer than 8 characters")]
     private ?string $phone = null;
 
     #[ORM\Column(type: Types::STRING, length: 8)]
+    #[Assert\NotBlank(message: "Password cannot be blank")]
     #[Assert\Length(max: 8, maxMessage: "Password cannot be longer than 8 characters")]
     private ?string $pass = null;
 
