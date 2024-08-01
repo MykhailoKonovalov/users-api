@@ -14,7 +14,8 @@ security:
         main:
             lazy: true
             provider: user_provider
-            custom_authenticator: App\Security\TokenAuthenticator
+            custom_authenticator: App\Security\Authentication\TokenAuthenticator
+            stateless: true
     access_control:
          - { path: ^/v1/api, roles: IS_AUTHENTICATED_FULLY }
 

@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace App\Action;
 
 use App\DTO\UserData;
+use App\Security\ApiPermission\UsersApiVoter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class DeleteAction extends Action
 {
@@ -16,6 +18,10 @@ class DeleteAction extends Action
     public function handle(?UserData $userData = null, ?int $id = null): JsonResponse
     {
         $user = $this->userService->getUserById($id);
+
+        if (!$this->authorizationChecker->isGranted(UsersApiVoter::DELETE, $user)) {
+            throw new AccessDeniedHttpException('You do not have permission to delete this user.');
+        }
 
         $this->userService->delete($user);
 

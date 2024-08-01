@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Security;
+namespace App\Security\Authentication;
 
 use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,11 +18,13 @@ use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPasspor
 
 class TokenAuthenticator extends AbstractAuthenticator
 {
-    private const AUTHORIZATION_HEADER = 'Authorization';
+    public const AUTHORIZATION_HEADER = 'Authorization';
 
-    public const ADMIN_TOKEN = 'testAdmin';
+    public const  TOKEN_REGEX          = '/^Bearer\s(\S+)$/';
 
-    public const USER_TOKEN = 'testUser';
+    public const  ADMIN_TOKEN          = 'testAdmin';
+
+    public const  USER_TOKEN           = 'testUser';
 
     public function __construct(private readonly UserRepository $userRepository) {}
 
@@ -39,7 +41,7 @@ class TokenAuthenticator extends AbstractAuthenticator
             throw new AuthenticationException('Missing authorization token');
         }
 
-        if (!preg_match('/^Bearer\s(\S+)$/', $authorizationToken, $matches)) {
+        if (!preg_match(self::TOKEN_REGEX, $authorizationToken, $matches)) {
             throw new AuthenticationException('Invalid authorization token');
         }
 
@@ -57,7 +59,8 @@ class TokenAuthenticator extends AbstractAuthenticator
             new UserBadge(
                 $userIdentifier, function (string $userIdentifier): ?UserInterface {
                     return $this->userRepository->findOneBy(['login' => $userIdentifier]);
-            })
+                },
+            ),
         );
     }
 

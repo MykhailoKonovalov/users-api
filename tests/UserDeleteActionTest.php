@@ -15,7 +15,7 @@ class UserDeleteActionTest extends WebTestCase
             server: [
                 'CONTENT_TYPE'       => 'application/json',
                 'HTTP_AUTHORIZATION' => 'Bearer testAdmin',
-             ]
+            ],
         );
 
         $this->assertEquals(Response::HTTP_NO_CONTENT, $client->getResponse()->getStatusCode());
@@ -28,7 +28,7 @@ class UserDeleteActionTest extends WebTestCase
             server: [
                 'CONTENT_TYPE'       => 'application/json',
                 'HTTP_AUTHORIZATION' => 'Bearer testAdmin',
-            ]
+            ],
         );
 
         $this->assertEquals(Response::HTTP_BAD_REQUEST, $client->getResponse()->getStatusCode());
@@ -42,10 +42,27 @@ class UserDeleteActionTest extends WebTestCase
             server: [
                 'CONTENT_TYPE'       => 'application/json',
                 'HTTP_AUTHORIZATION' => 'Bearer testAdmin',
-            ]
+            ],
         );
 
         $this->assertEquals(Response::HTTP_NOT_FOUND, $client->getResponse()->getStatusCode());
         $this->assertStringContainsString('User not found', $client->getResponse()->getContent());
+    }
+
+    public function testDeleteUserWithDeniedAccess(): void
+    {
+        $client = static::createClient();
+        $client->request(Request::METHOD_DELETE, '/v1/api/users/10',
+            server: [
+                'CONTENT_TYPE'       => 'application/json',
+                'HTTP_AUTHORIZATION' => 'Bearer testUser',
+            ],
+        );
+
+        $this->assertEquals(Response::HTTP_FORBIDDEN, $client->getResponse()->getStatusCode());
+        $this->assertStringContainsString(
+            'You do not have permission to delete this user.',
+            $client->getResponse()->getContent()
+        );
     }
 }

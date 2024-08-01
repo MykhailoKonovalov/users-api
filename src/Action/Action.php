@@ -7,12 +7,16 @@ namespace App\Action;
 use App\DTO\UserData;
 use App\Service\UserService;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 abstract class Action
 {
     public const ACTION_METHOD = "";
 
-    public function __construct(protected readonly UserService $userService) {}
+    public function __construct(
+        protected readonly AuthorizationCheckerInterface $authorizationChecker,
+        protected readonly UserService $userService,
+    ) {}
 
     public function canHandle(string $method): bool
     {
