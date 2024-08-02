@@ -15,7 +15,7 @@ class DeleteAction extends Action
 {
     public const ACTION_METHOD = Request::METHOD_DELETE;
 
-    public function handle(?UserData $userData = null, ?int $id = null): JsonResponse
+    public function execute(?UserData $userData = null, ?int $id = null): JsonResponse
     {
         $user = $this->userService->getUserById($id);
 
@@ -23,7 +23,7 @@ class DeleteAction extends Action
             throw new AccessDeniedHttpException('You do not have permission to delete this user.');
         }
 
-        $this->userService->delete($user);
+        $this->userService->deleteUser($user);
 
         return new JsonResponse(status: Response::HTTP_NO_CONTENT);
     }

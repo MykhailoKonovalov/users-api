@@ -18,8 +18,6 @@ readonly class ExceptionListener
     {
         $exception = $event->getThrowable();
 
-        $this->logger->error($exception->getMessage(), $exception->getTrace());
-
         $response = new JsonResponse([
             'code'    => $exception->getCode(),
             'message' => $exception->getMessage(),
@@ -33,5 +31,7 @@ readonly class ExceptionListener
         }
 
         $event->setResponse($response);
+
+        $this->logger->error($exception->getMessage(), $exception->getTrace());
     }
 }

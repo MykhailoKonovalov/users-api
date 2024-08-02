@@ -14,7 +14,7 @@ class PutAction extends Action
 {
     public const ACTION_METHOD = Request::METHOD_PUT;
 
-    public function handle(?UserData $userData = null, ?int $id = null): JsonResponse
+    public function execute(?UserData $userData = null, ?int $id = null): JsonResponse
     {
         $user = $this->userService->getUserById($id);
 

@@ -21,7 +21,7 @@ class ActionResolver
     public function resolve(string $method): Action
     {
         foreach ($this->actions as $action) {
-            if ($action->canHandle($method)) {
+            if ($action->supports($method)) {
                 return $action;
             }
         }

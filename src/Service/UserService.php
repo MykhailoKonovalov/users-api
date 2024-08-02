@@ -45,7 +45,7 @@ readonly class UserService
         $this->entityManager->flush();
     }
 
-    public function delete(User $user): void
+    public function deleteUser(User $user): void
     {
         $this->entityManager->remove($user);
         $this->entityManager->flush();

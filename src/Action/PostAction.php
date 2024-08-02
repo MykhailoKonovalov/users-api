@@ -16,7 +16,7 @@ class PostAction extends Action
 {
     public const ACTION_METHOD = Request::METHOD_POST;
 
-    public function handle(?UserData $userData = null, ?int $id = null): JsonResponse
+    public function execute(?UserData $userData = null, ?int $id = null): JsonResponse
     {
         $user = new User();
 

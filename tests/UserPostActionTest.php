@@ -31,8 +31,8 @@ class UserPostActionTest extends WebTestCase
         $this->assertJson($responseContent);
 
         $response = json_decode($responseContent, true);
-        $this->assertIsArray($response);
 
+        $this->assertIsArray($response);
         $this->assertArrayHasKey('id', $response);
         $this->assertArrayHasKey('login', $response);
         $this->assertArrayHasKey('phone', $response);

@@ -28,9 +28,9 @@ class UsersApiVoter extends Voter
 
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
     {
-        $user = $token->getUser();
+        $currentUser = $token->getUser();
 
-        if (!$user instanceof User) {
+        if (!$currentUser instanceof User) {
             return false;
         }
 
@@ -48,7 +48,7 @@ class UsersApiVoter extends Voter
 
         return match ($attribute) {
             self::VIEW,
-            self::EDIT   => $user->getId() === $subject->getId(),
+            self::EDIT   => $currentUser->getId() === $subject->getId(),
             self::CREATE => true,
             default      => false,
         };

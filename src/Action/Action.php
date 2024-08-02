@@ -18,10 +18,10 @@ abstract class Action
         protected readonly UserService $userService,
     ) {}
 
-    public function canHandle(string $method): bool
+    public function supports(string $method): bool
     {
         return $method === static::ACTION_METHOD;
     }
 
-    abstract public function handle(?UserData $userData = null, ?int $id = null): JsonResponse;
+    abstract public function execute(?UserData $userData = null, ?int $id = null): JsonResponse;
 }

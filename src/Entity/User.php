@@ -14,7 +14,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: 'users')]
 #[ORM\UniqueConstraint(name: "UNIQ_IDENTIFIER_LOGIN_PASS", fields: ["login", "pass"])]
-#[UniqueEntity(fields: ["login", "pass"], message: "A user with this login and password already exists, and you now know their credentials")]
+#[UniqueEntity(
+    fields: ["login", "pass"],
+    message: "A user with this login and password already exists, and you now know their credentials"
+)]
 class User implements UserInterface
 {
     #[ORM\Id]

@@ -15,15 +15,15 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/v1/api/users/{id?}', requirements: ['id' => '\d+'])]
 class UserController extends AbstractController
 {
-    public function __construct(private readonly ActionResolver $actionProvider) {}
+    public function __construct(private readonly ActionResolver $actionResolver) {}
 
     public function __invoke(
         Request $request,
         #[MapRequestPayload] ?UserData $userData = null,
         ?int $id = null,
     ) : JsonResponse {
-        $action = $this->actionProvider->resolve($request->getMethod());
+        $action = $this->actionResolver->resolve($request->getMethod());
 
-        return $action->handle($userData, $id);
+        return $action->execute($userData, $id);
     }
 }

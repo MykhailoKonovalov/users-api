@@ -20,11 +20,11 @@ class TokenAuthenticator extends AbstractAuthenticator
 {
     public const AUTHORIZATION_HEADER = 'Authorization';
 
-    public const  TOKEN_REGEX          = '/^Bearer\s(\S+)$/';
+    public const TOKEN_REGEX          = '/^Bearer\s(\S+)$/';
 
-    public const  ADMIN_TOKEN          = 'testAdmin';
+    public const ADMIN_TOKEN          = 'testAdmin';
 
-    public const  USER_TOKEN           = 'testUser';
+    public const USER_TOKEN           = 'testUser';
 
     public function __construct(private readonly UserRepository $userRepository) {}
 
